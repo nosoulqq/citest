@@ -11,6 +11,7 @@ node("docker-node-1") {
 		sh "docker login -u admin -p Harbor12345 cnwbzp1187.cn.dst.ibm.com"
 		sh "docker push cnwbzp1187.cn.dst.ibm.com/library/nginx-lj:${BUILD_NUMBER}"
 	stage 'delopy'
+                sh "docker run --name nginx-lj -d -p 8085:80 nginx-lj:${BUILD_NUMBER}"
                 sh "docker rm -f `docker ps -a |grep 'nginx-lj' |awk '{print \$1}'`"
 		sh "docker run --name nginx-lj -d -p 8084:80 cnwbzp1187.cn.dst.ibm.com/library/nginx-lj:${BUILD_NUMBER}"
 }
